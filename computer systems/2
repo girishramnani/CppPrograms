@@ -1,0 +1,53 @@
+	.file	"hello.c"
+	.globl	acm
+	.bss
+	.align 4
+acm:
+	.space 4
+	.text
+	.globl	sum
+	.def	sum;	.scl	2;	.type	32;	.endef
+	.seh_proc	sum
+sum:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	subq	$16, %rsp
+	.seh_stackalloc	16
+	.seh_setframe	%rbp, 16
+	.seh_endprologue
+	movl	%ecx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	24(%rbp), %eax
+	movl	16(%rbp), %edx
+	addl	%edx, %eax
+	movl	%eax, -4(%rbp)
+	movl	acm(%rip), %edx
+	movl	-4(%rbp), %eax
+	addl	%edx, %eax
+	movl	%eax, acm(%rip)
+	movl	-4(%rbp), %eax
+	addq	$16, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.def	__main;	.scl	2;	.type	32;	.endef
+	.globl	main
+	.def	main;	.scl	2;	.type	32;	.endef
+	.seh_proc	main
+main:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_setframe	%rbp, 32
+	.seh_endprologue
+	movl	%ecx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	call	__main
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  bubblesort.cpp
+ *       Filename:  linkedList.cpp
  *
  *    Description:  my program
  *
  *        Version:  1.0
- *        Created:  Thursday 30 April 2015 06:47:33  IST
+ *        Created:  Thursday 30 April 2015 06:55:28  IST
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,7 +15,6 @@
  *
  * =====================================================================================
  */
-
 
 #include <cstring>
 #include <vector>
@@ -40,30 +39,50 @@
 #include <cassert>
 
 using namespace std;
+struct node {
+int data;
+node * next;
+};
 
-void swap(int &a,int &b){
- a= a+b;
-b=a-b;
-a=a-b;
+
+node * head = NULL;
+
+void pop(){
+ head = head->next;
+}
+void add(int data){
+ if(head==NULL){
+head = (node *) malloc(sizeof(node));
+head->data = data;
+head->next = NULL;
+cout << "inside head" << endl;
+}
+else{
+node * temp;
+temp = (node *) malloc(sizeof(node));
+temp->next = head;
+temp->data=data;
+head = temp;
+} 
+}
+void view(){
+
+node* s = head;
+while(s != NULL){
+cout << s->data<<endl;
+s = s->next;
 }
 
-void bubbleSort(int *arr,int size){
-for(int i=0;i<size;i++){
-for(int j=0;j<size-i-1;j++){
-if(arr[j] >arr[j+1]){
-swap(arr[j],arr[j+1]);
-}
-}
-}
 }
 
-void display(int *arr){
-for(int i=0;*(arr+i);i++) cout << arr[i];
-}
 int main ( int argc, char *argv[] )
 {
-	int arr[] = {5,4,3,2,1,'\0'};
-	bubbleSort(arr,5);
-	display(arr);
+	add(5);
+	add(6);
+	add(7);
+	view();	
+	pop();
+	view();	
 return 0;
 }					/* ----------  end of function main  ---------- */
+
